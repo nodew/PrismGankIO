@@ -1,0 +1,21 @@
+﻿<Page
+    x:Class="PrismGankIO.Shared.Views.Shell"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PrismGankIO.Shared.Views"
+    xmlns:prismMvvm="using:Prism.Mvvm"
+    xmlns:prismRegions="using:Prism.Regions"
+    prismMvvm:ViewModelLocator.AutowireViewModel="True"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
+    <NavigationView x:Name="MainNavigationView" SelectionChanged="HandleSelectionChanged">
+        <NavigationView.MenuItems>
+            <NavigationViewItem Content="首页" Tag="Home" />
+            <NavigationViewItem Content="妹子" Tag="Girl" />
+            <NavigationViewItem Content="干货" Tag="Ganhuo" />
+            <NavigationViewItem Content="文章" Tag="Article" />
+        </NavigationView.MenuItems>
+        <NavigationView.Content>
+            <ContentControl prismRegions:RegionManager.RegionName="ContentRegion" />
+        </NavigationView.Content>
+    </NavigationView>
+</Page>
