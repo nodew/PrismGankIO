@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Prism.DryIoc;
 using Prism.Ioc;
 using PrismGankIO.Shared.Views;
 using Windows.ApplicationModel;
@@ -9,7 +10,7 @@ namespace PrismGankIO
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    sealed partial class App
+    sealed partial class App : PrismApplication
     {
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code

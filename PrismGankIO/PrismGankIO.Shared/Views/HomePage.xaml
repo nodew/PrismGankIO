@@ -9,7 +9,6 @@
     prismMvvm:ViewModelLocator.AutowireViewModel="True"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
         <TextBlock>This is the home page</TextBlock>
     </StackPanel>

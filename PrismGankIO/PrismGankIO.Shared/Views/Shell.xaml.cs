@@ -1,4 +1,6 @@
-﻿using PrismGankIO.Shared.ViewModels;
+﻿using Prism.Regions;
+using PrismGankIO.Shared.Constant;
+using PrismGankIO.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,7 +28,7 @@ namespace PrismGankIO.Shared.Views
     {
         private readonly ShellViewModel viewModel;
 
-        public Shell()
+        public Shell(IRegionManager regionManger)
         {
             InitializeComponent();
 
@@ -40,11 +42,13 @@ namespace PrismGankIO.Shared.Views
                     SetSelectedItemByTag(viewModel.SelectedNavItem);
                 }
             };
+
+            regionManger.RegisterViewWithRegion(RegionNames.ContentRegion, typeof(HomePage));
         }
 
         private void SetSelectedItemByTag(string tag)
         {
-            if (tag == "Setting")
+            if (tag == SideNavTags.SettingPage)
             {
                 MainNavigationView.SelectedItem = MainNavigationView.SettingsItem;
             } 
@@ -59,7 +63,7 @@ namespace PrismGankIO.Shared.Views
             string tag;
             if (e.IsSettingsSelected)
             {
-                tag = "Setting";
+                tag = SideNavTags.SettingPage;
             }
             else
             {
