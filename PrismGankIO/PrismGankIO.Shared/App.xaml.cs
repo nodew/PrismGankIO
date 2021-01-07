@@ -4,6 +4,8 @@ using Prism.Ioc;
 using PrismGankIO.Shared.Views;
 using Windows.ApplicationModel;
 using Windows.UI.Xaml;
+using System.Net.Http;
+using PrismGankIO.Core.Services;
 
 namespace PrismGankIO
 {
@@ -32,6 +34,9 @@ namespace PrismGankIO
         {
             containerRegistry.RegisterForNavigation(typeof(HomePage), nameof(HomePage));
             containerRegistry.RegisterForNavigation(typeof(SettingPage), nameof(SettingPage));
+
+            containerRegistry.RegisterInstance(typeof(HttpClient), new HttpClient());
+            containerRegistry.RegisterSingleton(typeof(IGankApiService), typeof(GankApiService));
         }
 
         /// <summary>

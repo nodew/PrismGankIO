@@ -13,7 +13,7 @@ namespace PrismGankIO.Shared.ViewModels
         public ShellViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
-            SelectedNavItem = "Home";
+            SelectedNavItem = SideNavTags.HomePage;
             HandleSelectedNavItemCmd = new DelegateCommand<string>(HandleSelectedNavItem);
         }
 
