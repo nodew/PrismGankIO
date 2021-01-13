@@ -14,16 +14,16 @@ namespace PrismGankIO.Core.Services
 
         Task<PagedResult<Post>> GetArticlesAsync(string type, int page = 1, int size = 10);
 
-        Task<PagedResult<Post>> GetGirlsAsync(string type, int page = 1, int size = 10);
+        Task<PagedResult<Post>> GetGirlsAsync(int page = 1, int size = 10);
 
         Task<PagedResult<Post>> GetGanHuoAsync(string type, int page = 1, int size = 10);
 
-        Task<HttpResult<SubType[]>> GetAvailableTypesAsync(Category category);
+        Task<HttpResult<List<SubType>>> GetAvailableTypesAsync(Category category);
 
-        Task<HttpResult<SubType[]>> GetAvailableTypesOfGanhuoAsync();
+        Task<HttpResult<List<SubType>>> GetAvailableTypesOfGanhuoAsync();
 
-        Task<HttpResult<SubType[]>> GetAvailableTypesOfArticleAsync();
+        Task<HttpResult<List<SubType>>> GetAvailableTypesOfArticleAsync();
 
-        Task<HttpResult<Banner[]>> GetBannersAsync();
+        Task<HttpResult<List<Banner>>> GetBannersAsync();
     }
 }

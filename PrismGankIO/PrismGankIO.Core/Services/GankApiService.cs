@@ -1,4 +1,5 @@
 ﻿using PrismGankIO.Core.Models;
+using PrismGankIO.Core.Converters;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,6 +22,29 @@ namespace PrismGankIO.Core.Services
                 IgnoreNullValues = true, 
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase 
             };
+            this.serializerOptions.Converters.Add(new DateTimeConverter());
+        }
+
+        public async Task<HttpResult<List<SubType>>> GetAvailableTypesAsync(Category category)
+        {
+            string requestUri = $"{baseUri}/categories/{category}";
+            return await GetDataAsync<HttpResult<List<SubType>>>(requestUri);
+        }
+
+        public async Task<HttpResult<List<SubType>>> GetAvailableTypesOfArticleAsync()
+        {
+            return await GetAvailableTypesAsync(Category.Article);
+        }
+
+        public async Task<HttpResult<List<SubType>>> GetAvailableTypesOfGanhuoAsync()
+        {
+            return await GetAvailableTypesAsync(Category.GanHuo);
+        }
+
+        public async Task<HttpResult<List<Banner>>> GetBannersAsync()
+        {
+            string requestUri = $"{baseUri}/banners";
+            return await GetDataAsync<HttpResult<List<Banner>>>(requestUri);
         }
 
         public async Task<PagedResult<Post>> GetArticlesAsync(string type, int page = 1, int size = 10)
@@ -28,36 +52,14 @@ namespace PrismGankIO.Core.Services
             return await GetPostsAsync(Category.Article, type, page, size);
         }
 
-        public async Task<HttpResult<SubType[]>> GetAvailableTypesAsync(Category category)
-        {
-            string requestUri = $"{baseUri}/{category}";
-            return await GetDataAsync<HttpResult<SubType[]>>(requestUri);
-        }
-
-        public async Task<HttpResult<SubType[]>> GetAvailableTypesOfArticleAsync()
-        {
-            return await GetAvailableTypesAsync(Category.Article);
-        }
-
-        public async Task<HttpResult<SubType[]>> GetAvailableTypesOfGanhuoAsync()
-        {
-            return await GetAvailableTypesAsync(Category.GanHuo);
-        }
-
-        public async Task<HttpResult<Banner[]>> GetBannersAsync()
-        {
-            string requestUri = $"{baseUri}/banner";
-            return await GetDataAsync<HttpResult<Banner[]>>(requestUri);
-        }
-
         public async Task<PagedResult<Post>> GetGanHuoAsync(string type, int page = 1, int size = 10)
         {
             return await GetPostsAsync(Category.GanHuo, type, page, size);
         }
 
-        public async Task<PagedResult<Post>> GetGirlsAsync(string type, int page = 1, int size = 10)
+        public async Task<PagedResult<Post>> GetGirlsAsync(int page = 1, int size = 10)
         {
-            return await GetPostsAsync(Category.Girl, type, page, size);
+            return await GetPostsAsync(Category.Girl, "Girl", page, size);
         }
 
         public async Task<PagedResult<Post>> GetHotPostsAsync(string hotType, Category category, int count = 10)
@@ -86,8 +88,9 @@ namespace PrismGankIO.Core.Services
                     {
                         return await JsonSerializer.DeserializeAsync<T>(contentStream, serializerOptions);
                     }
-                    catch (JsonException) // Invalid JSON
+                    catch (JsonException ex)
                     {
+                        Console.WriteLine(ex);
                         Console.WriteLine("Invalid JSON.");
                     }
                 }
