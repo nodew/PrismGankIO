@@ -6,6 +6,7 @@ using Windows.ApplicationModel;
 using Windows.UI.Xaml;
 using System.Net.Http;
 using PrismGankIO.Core.Services;
+using PrismGankIO.Shared.Constant;
 
 namespace PrismGankIO
 {
@@ -32,8 +33,11 @@ namespace PrismGankIO
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation(typeof(HomePage), nameof(HomePage));
-            containerRegistry.RegisterForNavigation(typeof(SettingPage), nameof(SettingPage));
+            containerRegistry.RegisterForNavigation(typeof(HomePage), SideNavTags.HomePage);
+            containerRegistry.RegisterForNavigation(typeof(SettingPage), SideNavTags.SettingPage);
+            containerRegistry.RegisterForNavigation(typeof(ArticlesPage), SideNavTags.ArticlesPage);
+            containerRegistry.RegisterForNavigation(typeof(GanHuoPage), SideNavTags.GanhuoPage);
+            containerRegistry.RegisterForNavigation(typeof(GirlsPage), SideNavTags.GirlsPage);
 
             containerRegistry.RegisterInstance(typeof(HttpClient), new HttpClient());
             containerRegistry.RegisterSingleton(typeof(IGankApiService), typeof(GankApiService));

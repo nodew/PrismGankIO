@@ -20,9 +20,21 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Constant\RegionNames.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constant\SideNavTags.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ArticlesPageViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\GanHuoPageViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\GirlsPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\HomePageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ShellViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ArticlesPage.xaml.cs">
+      <DependentUpon>ArticlesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\GanHuoPage.xaml.cs">
+      <DependentUpon>GanHuoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\GirlsPage.xaml.cs">
+      <DependentUpon>GirlsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -34,6 +46,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Views\ArticlesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\GanHuoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\GirlsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
