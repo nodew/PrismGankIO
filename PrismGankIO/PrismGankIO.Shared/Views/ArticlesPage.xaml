@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:PrismGankIO.Shared.Views"
+    xmlns:models="using:PrismGankIO.Core.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prismMvvm="using:Prism.Mvvm"
@@ -10,7 +11,30 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock>This is the articles page</TextBlock>
-    </StackPanel>
+    <Page.Resources>
+        <DataTemplate x:Key="PostTemplate" x:DataType="models:Post">
+            <StackPanel Margin="20" Width="360" Height="360">
+                <Image Stretch="UniformToFill" Source="{Binding Images[0]}" Width="340" Height="280"/>
+                <TextBox  Text="{Binding Images[0]}"></TextBox>
+                <TextBlock Text="{Binding Url}" />
+                <TextBlock Text="{Binding Title}" />
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <RefreshContainer>
+            <GridView
+                x:Name="PostGridView"
+                ItemsSource="{Binding Posts, Mode=OneWay}"
+                ItemTemplate="{StaticResource PostTemplate}"
+                IsItemClickEnabled="True"
+                SelectionChanged="HandleSelectionChanged"
+                SelectionMode="Single"
+            ></GridView>
+        </RefreshContainer>
+        <StackPanel>
+            <ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" IsActive="{Binding IsLoading}" />
+        </StackPanel>
+    </Grid>
 </Page>
