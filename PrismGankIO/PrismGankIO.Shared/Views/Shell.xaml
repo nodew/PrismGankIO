@@ -32,7 +32,11 @@
             </NavigationViewItem>
         </NavigationView.MenuItems>
         <NavigationView.Content>
-            <ContentControl prismRegions:RegionManager.RegionName="ContentRegion" />
+            <ContentControl 
+                prismRegions:RegionManager.RegionName="ContentRegion" 
+                VerticalContentAlignment="Stretch" 
+                HorizontalContentAlignment="Stretch" 
+            />
         </NavigationView.Content>
     </NavigationView>
 </Page>
