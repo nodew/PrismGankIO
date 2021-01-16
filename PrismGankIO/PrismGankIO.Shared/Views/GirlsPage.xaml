@@ -3,6 +3,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:PrismGankIO.Shared.Views"
+    xmlns:models="using:PrismGankIO.Core.Models"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prismMvvm="using:Prism.Mvvm"
@@ -10,7 +12,29 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock>This is the girls page</TextBlock>
-    </StackPanel>
+    <Page.Resources>
+        <DataTemplate x:Key="GirlItemTemplate" x:DataType="models:Post">
+            <Grid>
+                <controls:ImageEx
+                    IsCacheEnabled="True"
+                    Source="{Binding Url}"
+                    Stretch="UniformToFill"
+                ></controls:ImageEx>
+                <StackPanel VerticalAlignment="Bottom">
+                    <TextBlock Text="{Binding Title}" HorizontalAlignment="Center"></TextBlock>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <controls:AdaptiveGridView 
+        x:Name="AdaptiveGridViewControl"
+        StretchContentForSingleRow="False"
+        OneRowModeEnabled="False"
+        ItemHeight="300"
+        DesiredWidth="360"
+        SelectionMode="None"
+        IsItemClickEnabled="True"
+        ItemsSource="{Binding Posts}"
+        ItemTemplate="{StaticResource GirlItemTemplate}" />
 </Page>

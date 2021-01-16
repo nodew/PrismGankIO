@@ -15,7 +15,6 @@
         <DataTemplate x:Key="PostTemplate" x:DataType="models:Post">
             <StackPanel Margin="20" Width="360" Height="360">
                 <Image Stretch="UniformToFill" Source="{Binding Images[0]}" Width="340" Height="280"/>
-                <TextBox  Text="{Binding Images[0]}"></TextBox>
                 <TextBlock Text="{Binding Url}" />
                 <TextBlock Text="{Binding Title}" />
             </StackPanel>
@@ -23,18 +22,13 @@
     </Page.Resources>
 
     <Grid>
-        <RefreshContainer>
-            <GridView
-                x:Name="PostGridView"
-                ItemsSource="{Binding Posts, Mode=OneWay}"
-                ItemTemplate="{StaticResource PostTemplate}"
-                IsItemClickEnabled="True"
-                SelectionChanged="HandleSelectionChanged"
-                SelectionMode="Single"
-            ></GridView>
-        </RefreshContainer>
-        <StackPanel>
-            <ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" IsActive="{Binding IsLoading}" />
-        </StackPanel>
+        <ListView
+            x:Name="PostGridView"
+            ItemsSource="{Binding Posts, Mode=OneWay}"
+            ItemTemplate="{StaticResource PostTemplate}"
+            IsItemClickEnabled="True"
+            SelectionChanged="HandleSelectionChanged"
+            SelectionMode="None"
+        ></ListView>
     </Grid>
 </Page>

@@ -22,7 +22,9 @@ namespace PrismGankIO
         public App()
         {
             ConfigureFilters(global::Uno.Extensions.LogExtensionPoint.AmbientLoggerFactory);
-
+#if WINDOWS_UWP
+            Windows.ApplicationModel.Resources.Core.ResourceContext.SetGlobalQualifierValue("custom", "uwp");
+#endif
             this.InitializeComponent();
         }
 

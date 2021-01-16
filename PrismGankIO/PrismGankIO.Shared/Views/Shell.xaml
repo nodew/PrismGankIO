@@ -10,10 +10,26 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
     <NavigationView x:Name="MainNavigationView" SelectionChanged="HandleSelectionChanged">
         <NavigationView.MenuItems>
-            <NavigationViewItem Content="首页" Tag="HomePage" />
-            <NavigationViewItem Content="文章" Tag="ArticlesPage" />
-            <NavigationViewItem Content="妹子" Tag="GirlsPage" />
-            <NavigationViewItem Content="干货" Tag="GanhuoPage" />
+            <NavigationViewItem Content="首页" Tag="HomePage">
+                <NavigationViewItem.Icon>
+                    <BitmapIcon UriSource="ms-appx:///Assets/home.png" />
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+            <NavigationViewItem Content="文章" Tag="ArticlesPage">
+                <NavigationViewItem.Icon>
+                    <BitmapIcon UriSource="ms-appx:///Assets/file-text.png" />
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+            <NavigationViewItem Content="妹子" Tag="GirlsPage" >
+                <NavigationViewItem.Icon>
+                    <BitmapIcon UriSource="ms-appx:///Assets/gift.png" />
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+            <NavigationViewItem Content="干货" Tag="GanhuoPage" >
+                <NavigationViewItem.Icon>
+                    <BitmapIcon UriSource="ms-appx:///Assets/glasses.png" />
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
         </NavigationView.MenuItems>
         <NavigationView.Content>
             <ContentControl prismRegions:RegionManager.RegionName="ContentRegion" />
