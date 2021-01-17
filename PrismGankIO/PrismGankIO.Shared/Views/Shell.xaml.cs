@@ -28,27 +28,30 @@ namespace PrismGankIO.Shared.Views
     {
         private readonly ShellViewModel viewModel;
 
-        public Shell(IRegionManager regionManger)
+        public Shell(IRegionManager regionManager)
         {
-            InitializeComponent();
-
-            viewModel = (ShellViewModel)this.DataContext;
-            
+            this.InitializeComponent();
+            this.viewModel = (ShellViewModel)this.DataContext;
             SetSelectedItemByTag(viewModel.SelectedNavItem);
 
-            viewModel.PropertyChanged += (object sender, PropertyChangedEventArgs e) => {
+            this.viewModel.PropertyChanged += (object sender, PropertyChangedEventArgs e) => {
                 if (e.PropertyName.Equals(nameof(viewModel.SelectedNavItem)))
                 {
                     SetSelectedItemByTag(viewModel.SelectedNavItem);
                 }
             };
 
-            regionManger.RegisterViewWithRegion(RegionNames.ContentRegion, typeof(HomePage));
+            RegionManager.SetRegionName(MainContent, RegionNames.ContentRegion);
+            regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof(HomePage));
+            MainContent.Loaded += (object sender, RoutedEventArgs e) =>
+            {
+                viewModel.ContentRegionLoadCmd.Execute();
+            };
         }
 
         private void SetSelectedItemByTag(string tag)
         {
-            if (tag == SideNavTags.SettingPage)
+            if (tag == Pages.SettingPage)
             {
                 MainNavigationView.SelectedItem = MainNavigationView.SettingsItem;
             } 
@@ -58,19 +61,24 @@ namespace PrismGankIO.Shared.Views
             }
         }
 
-        private void HandleSelectionChanged(object sender, NavigationViewSelectionChangedEventArgs e)
+        private void HandleItemInvoked(object sender, NavigationViewItemInvokedEventArgs e)
         {
             string tag;
-            if (e.IsSettingsSelected)
+            if (e.IsSettingsInvoked)
             {
-                tag = SideNavTags.SettingPage;
+                tag = Pages.SettingPage;
             }
             else
             {
-                tag = ((FrameworkElement)e.SelectedItem).Tag.ToString();
+                tag = e.InvokedItemContainer.Tag.ToString();
             }
 
             viewModel.HandleSelectedNavItemCmd.Execute(tag);
+        }
+
+        private void HandleBackRequested(object sender, NavigationViewBackRequestedEventArgs e)
+        {
+            viewModel.GoBackCmd.Execute();
         }
     }
 }

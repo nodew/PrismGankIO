@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PrismGankIO.Shared.Constant
 {
-    public static class SideNavTags
+    public static class Pages
     {
         public static readonly string HomePage = "HomePage";
 
@@ -15,5 +15,9 @@ namespace PrismGankIO.Shared.Constant
         public static readonly string GanhuoPage = "GanhuoPage";
 
         public static readonly string SettingPage = "SettingPage";
+
+        public static readonly string ImageDetailPage = "ImageDetailPage";
+
+        public static readonly string PostDetailPage = "PostDetailPage";
     }
 }

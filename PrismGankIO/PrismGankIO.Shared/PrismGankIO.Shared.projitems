@@ -19,7 +19,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Constant\RegionNames.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Constant\SideNavTags.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Constant\Pages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ArticlesPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\GanHuoPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\GirlsPageViewModel.cs" />
@@ -37,6 +37,12 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ImageDetailPage.xaml.cs">
+      <DependentUpon>ImageDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\PostDetailPage.xaml.cs">
+      <DependentUpon>PostDetailPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
@@ -62,7 +68,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\ImageDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\PostDetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Views\SettingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Resources\SharedTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -82,5 +100,8 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\gift.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\glasses.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\home.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Resources\" />
   </ItemGroup>
 </Project>

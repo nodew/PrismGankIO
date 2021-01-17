@@ -12,20 +12,13 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
-        <DataTemplate x:Key="PostTemplate" x:DataType="models:Post">
-            <StackPanel Margin="20" Width="360" Height="360">
-                <Image Stretch="UniformToFill" Source="{Binding Images[0]}" Width="340" Height="280"/>
-                <TextBlock Text="{Binding Url}" />
-                <TextBlock Text="{Binding Title}" />
-            </StackPanel>
-        </DataTemplate>
     </Page.Resources>
 
     <Grid>
         <ListView
             x:Name="PostGridView"
             ItemsSource="{Binding Posts, Mode=OneWay}"
-            ItemTemplate="{StaticResource PostTemplate}"
+            ItemTemplate="{StaticResource PostItemTemplate}"
             IsItemClickEnabled="True"
             SelectionChanged="HandleSelectionChanged"
             SelectionMode="None"

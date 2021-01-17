@@ -88,7 +88,7 @@ namespace PrismGankIO.Shared.ViewModels
 
         private async Task LoadPosts()
         {
-            if (!moreAvailable)
+            if (!MoreAvailable)
             {
                 return;
             }
@@ -99,7 +99,7 @@ namespace PrismGankIO.Shared.ViewModels
             
                 if (result.PageCount <= currentPage)
                 {
-                    moreAvailable = false;
+                    MoreAvailable = false;
                 }
             
                 result.Data.ForEach((item) =>

@@ -35,11 +35,13 @@ namespace PrismGankIO
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation(typeof(HomePage), SideNavTags.HomePage);
-            containerRegistry.RegisterForNavigation(typeof(SettingPage), SideNavTags.SettingPage);
-            containerRegistry.RegisterForNavigation(typeof(ArticlesPage), SideNavTags.ArticlesPage);
-            containerRegistry.RegisterForNavigation(typeof(GanHuoPage), SideNavTags.GanhuoPage);
-            containerRegistry.RegisterForNavigation(typeof(GirlsPage), SideNavTags.GirlsPage);
+            containerRegistry.RegisterForNavigation(typeof(HomePage), Pages.HomePage);
+            containerRegistry.RegisterForNavigation(typeof(SettingPage), Pages.SettingPage);
+            containerRegistry.RegisterForNavigation(typeof(ArticlesPage), Pages.ArticlesPage);
+            containerRegistry.RegisterForNavigation(typeof(GanHuoPage), Pages.GanhuoPage);
+            containerRegistry.RegisterForNavigation(typeof(GirlsPage), Pages.GirlsPage);
+            containerRegistry.RegisterForNavigation(typeof(ImageDetailPage), Pages.ImageDetailPage);
+            containerRegistry.RegisterForNavigation(typeof(PostDetailPage), Pages.PostDetailPage);
 
             containerRegistry.RegisterInstance(typeof(HttpClient), new HttpClient());
             containerRegistry.RegisterSingleton(typeof(IGankApiService), typeof(GankApiService));

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Prism.Regions;
+using PrismGankIO.Core.Models;
+using PrismGankIO.Shared.Constant;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,18 +16,27 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
-
 namespace PrismGankIO.Shared.Views
 {
-    /// <summary>
-    /// 可用于自身或导航至 Frame 内部的空白页。
-    /// </summary>
     public sealed partial class GirlsPage : Page
     {
-        public GirlsPage()
+        private readonly IRegionManager regionManager;
+
+        public GirlsPage(IRegionManager regionManager)
         {
+            this.regionManager = regionManager;
             this.InitializeComponent();
+        }
+
+        private void ImageItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (e.ClickedItem != null)
+            {
+                Post item = e.ClickedItem as Post;
+                NavigationParameters parameters = new NavigationParameters();
+                parameters.Add("ImageUrl", item.Url);
+                regionManager.RequestNavigate(RegionNames.ContentRegion, Pages.ImageDetailPage, parameters);
+            }
         }
     }
 }

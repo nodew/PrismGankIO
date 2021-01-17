@@ -5,10 +5,15 @@
     xmlns:local="using:PrismGankIO.Shared.Views"
     xmlns:constant="using:PrismGankIO.Shared.Constant"
     xmlns:prismMvvm="using:Prism.Mvvm"
-    xmlns:prismRegions="using:Prism.Regions"
     prismMvvm:ViewModelLocator.AutowireViewModel="True"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
-    <NavigationView x:Name="MainNavigationView" SelectionChanged="HandleSelectionChanged">
+    <NavigationView 
+        x:Name="MainNavigationView" 
+        ItemInvoked="HandleItemInvoked"
+        IsBackEnabled="{Binding IsBackEnabled}"
+        IsBackButtonVisible="{Binding BackButtonVisible}"
+        BackRequested="HandleBackRequested"
+    >
         <NavigationView.MenuItems>
             <NavigationViewItem Content="首页" Tag="HomePage">
                 <NavigationViewItem.Icon>
@@ -33,7 +38,7 @@
         </NavigationView.MenuItems>
         <NavigationView.Content>
             <ContentControl 
-                prismRegions:RegionManager.RegionName="ContentRegion" 
+                x:Name="MainContent"
                 VerticalContentAlignment="Stretch" 
                 HorizontalContentAlignment="Stretch" 
             />

@@ -13,28 +13,34 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
-        <DataTemplate x:Key="GirlItemTemplate" x:DataType="models:Post">
-            <Grid>
-                <controls:ImageEx
-                    IsCacheEnabled="True"
-                    Source="{Binding Url}"
-                    Stretch="UniformToFill"
-                ></controls:ImageEx>
-                <StackPanel VerticalAlignment="Bottom">
-                    <TextBlock Text="{Binding Title}" HorizontalAlignment="Center"></TextBlock>
-                </StackPanel>
-            </Grid>
-        </DataTemplate>
+        
     </Page.Resources>
 
-    <controls:AdaptiveGridView 
-        x:Name="AdaptiveGridViewControl"
-        StretchContentForSingleRow="False"
-        OneRowModeEnabled="False"
-        ItemHeight="300"
-        DesiredWidth="360"
-        SelectionMode="None"
-        IsItemClickEnabled="True"
-        ItemsSource="{Binding Posts}"
-        ItemTemplate="{StaticResource GirlItemTemplate}" />
+    <ScrollViewer>
+        <Grid Margin="10">
+            <controls:AdaptiveGridView 
+                x:Name="AdaptiveGridViewControl"
+                StretchContentForSingleRow="False"
+                OneRowModeEnabled="False"
+                ItemHeight="300"
+                DesiredWidth="360"
+                SelectionMode="None"
+                IsItemClickEnabled="True"
+                ItemClick="ImageItemClick"
+                ItemsSource="{Binding Posts}"
+                ItemTemplate="{StaticResource GirlItemTemplate}">
+                <controls:AdaptiveGridView.ItemContainerStyle>
+                    <Style TargetType="GridViewItem" >
+                        <Setter Property="Margin" Value="10" />
+                    </Style>
+                </controls:AdaptiveGridView.ItemContainerStyle>
+            </controls:AdaptiveGridView>
+            <controls:Loading x:Name="LoadingControl" IsLoading="{Binding IsLoading}">
+                <controls:Loading.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.25" />
+                </controls:Loading.Background>
+                <ContentControl ContentTemplate="{StaticResource DataLoadingTemplate}" />
+            </controls:Loading>
+        </Grid>
+    </ScrollViewer>
 </Page>
