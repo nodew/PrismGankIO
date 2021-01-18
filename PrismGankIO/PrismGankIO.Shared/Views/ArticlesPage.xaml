@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:PrismGankIO.Shared.Views"
     xmlns:models="using:PrismGankIO.Core.Models"
+    xmlns:viewModels="using:PrismGankIO.Shared.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prismMvvm="using:Prism.Mvvm"
@@ -15,13 +16,23 @@
     </Page.Resources>
 
     <Grid>
-        <ListView
-            x:Name="PostGridView"
-            ItemsSource="{Binding Posts, Mode=OneWay}"
-            ItemTemplate="{StaticResource PostItemTemplate}"
-            IsItemClickEnabled="True"
-            SelectionChanged="HandleSelectionChanged"
-            SelectionMode="None"
-        ></ListView>
+        <Pivot ItemsSource="{Binding TypedPosts}" SelectionChanged="HandlePivotSelectionChanged">
+            <Pivot.HeaderTemplate>
+                <DataTemplate x:DataType="viewModels:TypedPosts">
+                    <TextBlock Text="{Binding Title}" />
+                </DataTemplate>
+            </Pivot.HeaderTemplate>
+            <Pivot.ItemTemplate>
+                <DataTemplate>
+                    <ListView
+                        x:Name="PostGridView"
+                        ItemsSource="{Binding Posts, Mode=OneWay}"
+                        ItemTemplate="{StaticResource PostItemTemplate}"
+                        IsItemClickEnabled="True"
+                        SelectionMode="None"
+                    ></ListView>
+                </DataTemplate>
+            </Pivot.ItemTemplate>
+        </Pivot>
     </Grid>
 </Page>

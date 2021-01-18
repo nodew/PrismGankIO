@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
+using Prism.Commands;
 
 namespace PrismGankIO.Shared.ViewModels
 {
@@ -15,26 +17,19 @@ namespace PrismGankIO.Shared.ViewModels
 
         private string selectedSubType;
 
-        private ObservableCollection<Post> posts = new ObservableCollection<Post>();
+        private ObservableCollection<TypedPosts> typedPosts = new ObservableCollection<TypedPosts>();
 
         private ObservableCollection<SubType> subTypes = new ObservableCollection<SubType>();
-
-        private int currentPage;
-
-        private readonly int pageSize = 20;
-
-        private bool moreAvailable;
-
-        private bool isLoading;
 
         public ArticlesPageViewModel(IGankApiService gankApiService)
         {
             this.gankApiService = gankApiService;
-            currentPage = 1;
-            moreAvailable = true;
-            isLoading = false;
+            HandleSelectedTypeChangedCmd = new DelegateCommand<string>(HandleSelectedChanged, (string type) => SelectedSubType != type);
+
             _ = Initialize();
         }
+
+        public DelegateCommand<string> HandleSelectedTypeChangedCmd { get; }
 
         public string SelectedSubType
         {
@@ -42,10 +37,10 @@ namespace PrismGankIO.Shared.ViewModels
             set { SetProperty(ref selectedSubType, value); }
         }
 
-        public ObservableCollection<Post> Posts
+        public ObservableCollection<TypedPosts> TypedPosts
         {
-            get { return posts; }
-            set { SetProperty(ref posts, value); }
+            get { return typedPosts; }
+            set { SetProperty(ref typedPosts, value); }
         }
 
         public ObservableCollection<SubType> SubTypes
@@ -54,66 +49,42 @@ namespace PrismGankIO.Shared.ViewModels
             set { SetProperty(ref subTypes, value); }
         }
 
-        public bool MoreAvailable
+        public TypedPosts ActiveItem
         {
-            get { return moreAvailable; }
-            set { SetProperty(ref moreAvailable, value); }
-        }
-
-        public bool IsLoading
-        {
-            get { return isLoading; }
-            set { SetProperty(ref isLoading, value); }
+            get { return TypedPosts.Where(item => item.Type == SelectedSubType).FirstOrDefault(); }
         }
 
         private async Task Initialize()
         {
-            IsLoading = true;
             HttpResult<List<SubType>> subTypes = await gankApiService.GetAvailableTypesOfArticleAsync();
             subTypes.Data.ForEach((type) =>
             {
                 SubTypes.Add(type);
+                TypedPosts.Add(new TypedPosts(gankApiService, Category.Article, type));
             });
 
             SelectedSubType = SubTypes[0].Type;
 
-            await LoadPosts();
+            await LoadDataAsync();
         }
 
-        private async Task LoadNextPagePosts()
+        private void HandleSelectedChanged(string type)
         {
-            currentPage += 1;
-            await LoadPosts();
+            SelectedSubType = type;
+            if (ActiveItem.Posts.Count == 0)
+            {
+                _ = LoadDataAsync();
+            }
         }
 
-        private async Task LoadPosts()
+        private async Task LoadNextPageAsync()
         {
-            if (!MoreAvailable)
-            {
-                return;
-            }
+            await ActiveItem.LoadNextPageAsync();
+        }
 
-            try
-            {
-                PagedResult<Post> result = await gankApiService.GetArticlesAsync(SelectedSubType, currentPage, pageSize);
-            
-                if (result.PageCount <= currentPage)
-                {
-                    MoreAvailable = false;
-                }
-            
-                result.Data.ForEach((item) =>
-                {
-                    Posts.Add(item);
-                });
-
-                IsLoading = false;
-            } 
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-            
+        private async Task LoadDataAsync()
+        {
+            await ActiveItem.LoadDataAsync();
         }
     }
 }
