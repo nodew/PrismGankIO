@@ -7,6 +7,7 @@
     xmlns:viewModels="using:PrismGankIO.Shared.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:prismMvvm="using:Prism.Mvvm"
     prismMvvm:ViewModelLocator.AutowireViewModel="True"
     mc:Ignorable="d"
@@ -16,20 +17,25 @@
     </Page.Resources>
 
     <Grid>
-        <Pivot ItemsSource="{Binding TypedPosts}" SelectionChanged="HandlePivotSelectionChanged">
+        <Pivot 
+            ItemsSource="{Binding TypedPosts}" 
+            SelectionChanged="HandlePivotSelectionChanged"
+            SelectedItem="{Binding SelectedItem}"
+        >
             <Pivot.HeaderTemplate>
                 <DataTemplate x:DataType="viewModels:TypedPosts">
                     <TextBlock Text="{Binding Title}" />
                 </DataTemplate>
             </Pivot.HeaderTemplate>
             <Pivot.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="viewModels:TypedPosts">
                     <ListView
                         x:Name="PostGridView"
                         ItemsSource="{Binding Posts, Mode=OneWay}"
                         ItemTemplate="{StaticResource PostItemTemplate}"
                         IsItemClickEnabled="True"
                         SelectionMode="None"
+                        IncrementalLoadingTrigger="Edge"
                     ></ListView>
                 </DataTemplate>
             </Pivot.ItemTemplate>

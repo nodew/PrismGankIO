@@ -1,4 +1,5 @@
-﻿using Prism.Mvvm;
+﻿using Microsoft.Toolkit.Collections;
+using Prism.Mvvm;
 using PrismGankIO.Core.Models;
 using PrismGankIO.Core.Services;
 using System;

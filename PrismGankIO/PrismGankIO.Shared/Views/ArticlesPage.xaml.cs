@@ -29,7 +29,7 @@ namespace PrismGankIO.Shared.Views
         {
             Pivot pivot = (Pivot)sender;
             TypedPosts selectedItem = (TypedPosts)pivot.SelectedItem;
-            viewModel.HandleSelectedTypeChangedCmd.Execute(selectedItem.Type);
+            viewModel.HandleSelectedTypeChangedCmd.Execute(selectedItem);
         }
     }
 }

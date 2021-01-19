@@ -15,7 +15,7 @@ namespace PrismGankIO.Shared.ViewModels
     {
         private readonly IGankApiService gankApiService;
 
-        private string selectedSubType;
+        private TypedPosts selectedItem;
 
         private ObservableCollection<TypedPosts> typedPosts = new ObservableCollection<TypedPosts>();
 
@@ -24,17 +24,20 @@ namespace PrismGankIO.Shared.ViewModels
         public ArticlesPageViewModel(IGankApiService gankApiService)
         {
             this.gankApiService = gankApiService;
-            HandleSelectedTypeChangedCmd = new DelegateCommand<string>(HandleSelectedChanged, (string type) => SelectedSubType != type);
+            HandleSelectedTypeChangedCmd = new DelegateCommand<TypedPosts>(
+                HandleSelectedChanged, 
+                (TypedPosts _selectedItem) => SelectedItem.Type != _selectedItem.Type
+            );
 
             _ = Initialize();
         }
 
-        public DelegateCommand<string> HandleSelectedTypeChangedCmd { get; }
+        public DelegateCommand<TypedPosts> HandleSelectedTypeChangedCmd { get; }
 
-        public string SelectedSubType
+        public TypedPosts SelectedItem
         {
-            get { return selectedSubType; }
-            set { SetProperty(ref selectedSubType, value); }
+            get { return selectedItem; }
+            set { SetProperty(ref selectedItem, value); }
         }
 
         public ObservableCollection<TypedPosts> TypedPosts
@@ -49,11 +52,6 @@ namespace PrismGankIO.Shared.ViewModels
             set { SetProperty(ref subTypes, value); }
         }
 
-        public TypedPosts ActiveItem
-        {
-            get { return TypedPosts.Where(item => item.Type == SelectedSubType).FirstOrDefault(); }
-        }
-
         private async Task Initialize()
         {
             HttpResult<List<SubType>> subTypes = await gankApiService.GetAvailableTypesOfArticleAsync();
@@ -63,15 +61,15 @@ namespace PrismGankIO.Shared.ViewModels
                 TypedPosts.Add(new TypedPosts(gankApiService, Category.Article, type));
             });
 
-            SelectedSubType = SubTypes[0].Type;
+            SelectedItem = TypedPosts[0];
 
             await LoadDataAsync();
         }
 
-        private void HandleSelectedChanged(string type)
+        private void HandleSelectedChanged(TypedPosts selectedItem)
         {
-            SelectedSubType = type;
-            if (ActiveItem.Posts.Count == 0)
+            SelectedItem = selectedItem;
+            if (SelectedItem.Posts.Count == 0 && !SelectedItem.IsLoading)
             {
                 _ = LoadDataAsync();
             }
@@ -79,12 +77,12 @@ namespace PrismGankIO.Shared.ViewModels
 
         private async Task LoadNextPageAsync()
         {
-            await ActiveItem.LoadNextPageAsync();
+            await SelectedItem.LoadNextPageAsync();
         }
 
         private async Task LoadDataAsync()
         {
-            await ActiveItem.LoadDataAsync();
+            await SelectedItem.LoadDataAsync();
         }
     }
 }
