@@ -9,6 +9,11 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
+        <WebView 
+            x:Name="PostDetailWebView"
+            NavigationStarting="PostDetailWebView_NavigationStarting" 
+            NavigationCompleted="PostDetailWebView_NavigationCompleted"
+        />
+        <ProgressRing x:Name="ProgressControl" IsActive="true" Height="50" Width="50"/>
     </Grid>
 </Page>

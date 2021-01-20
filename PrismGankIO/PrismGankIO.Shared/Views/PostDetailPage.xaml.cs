@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Prism.Regions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,11 +21,41 @@ namespace PrismGankIO.Shared.Views
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class PostDetailPage : Page
+    public sealed partial class PostDetailPage : Page, INavigationAware, IRegionMemberLifetime
     {
         public PostDetailPage()
         {
             this.InitializeComponent();
+        }
+
+        public bool KeepAlive => false;
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+
+        }
+
+        void PostDetailWebView_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
+        {
+            ProgressControl.IsActive = true;
+        }
+
+        void PostDetailWebView_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs args)
+        {
+            ProgressControl.IsActive = false;
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            if (navigationContext.Parameters.TryGetValue("PostUrl", out string url))
+            {
+                PostDetailWebView.Source = new Uri(url);
+            }
         }
     }
 }

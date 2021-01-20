@@ -1,11 +1,15 @@
-﻿using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Prism.Regions;
+using PrismGankIO.Core.Models;
+using PrismGankIO.Core.Services;
 
 namespace PrismGankIO.Shared.ViewModels
 {
-    public class GanHuoPageViewModel : BindableBase
+    public class GanHuoPageViewModel : PostCollectionViewModel
     {
+        public GanHuoPageViewModel(IGankApiService gankApiService, IRegionManager regionManager) 
+            : base(gankApiService, regionManager)
+        {
+            _ = this.Initialize(Category.GanHuo);
+        }
     }
 }

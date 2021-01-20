@@ -15,14 +15,9 @@
         BackRequested="HandleBackRequested"
     >
         <NavigationView.MenuItems>
-            <NavigationViewItem Content="首页" Tag="HomePage">
+            <NavigationViewItem Content="推荐" Tag="HomePage">
                 <NavigationViewItem.Icon>
                     <BitmapIcon UriSource="ms-appx:///Assets/home.png" />
-                </NavigationViewItem.Icon>
-            </NavigationViewItem>
-            <NavigationViewItem Content="文章" Tag="ArticlesPage">
-                <NavigationViewItem.Icon>
-                    <BitmapIcon UriSource="ms-appx:///Assets/file-text.png" />
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
             <NavigationViewItem Content="妹子" Tag="GirlsPage" >
@@ -33,6 +28,11 @@
             <NavigationViewItem Content="干货" Tag="GanhuoPage" >
                 <NavigationViewItem.Icon>
                     <BitmapIcon UriSource="ms-appx:///Assets/glasses.png" />
+                </NavigationViewItem.Icon>
+            </NavigationViewItem>
+            <NavigationViewItem Content="文章" Tag="ArticlesPage">
+                <NavigationViewItem.Icon>
+                    <BitmapIcon UriSource="ms-appx:///Assets/file-text.png" />
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
         </NavigationView.MenuItems>

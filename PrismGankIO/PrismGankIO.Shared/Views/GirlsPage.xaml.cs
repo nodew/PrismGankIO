@@ -20,23 +20,9 @@ namespace PrismGankIO.Shared.Views
 {
     public sealed partial class GirlsPage : Page
     {
-        private readonly IRegionManager regionManager;
-
-        public GirlsPage(IRegionManager regionManager)
+        public GirlsPage()
         {
-            this.regionManager = regionManager;
             this.InitializeComponent();
-        }
-
-        private void ImageItemClick(object sender, ItemClickEventArgs e)
-        {
-            if (e.ClickedItem != null)
-            {
-                Post item = e.ClickedItem as Post;
-                NavigationParameters parameters = new NavigationParameters();
-                parameters.Add("ImageUrl", item.Url);
-                regionManager.RequestNavigate(RegionNames.ContentRegion, Pages.ImageDetailPage, parameters);
-            }
         }
     }
 }

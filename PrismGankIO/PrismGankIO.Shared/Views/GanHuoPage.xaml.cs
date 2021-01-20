@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Prism.Regions;
+using PrismGankIO.Core.Models;
+using PrismGankIO.Shared.Constant;
+using PrismGankIO.Shared.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +26,27 @@ namespace PrismGankIO.Shared.Views
     /// </summary>
     public sealed partial class GanHuoPage : Page
     {
+        private GanHuoPageViewModel viewModel;
+
         public GanHuoPage()
         {
             this.InitializeComponent();
+            this.viewModel = this.DataContext as GanHuoPageViewModel;
+        }
+
+        private void HandlePivotSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Pivot pivot = (Pivot)sender;
+            TypedPosts selectedItem = (TypedPosts)pivot.SelectedItem;
+            viewModel.HandleSelectedTypeChangedCmd.Execute(selectedItem);
+        }
+
+        private void HandlePostItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (e.ClickedItem != null)
+            {
+                viewModel.HandlePostItemClickedCmd.Execute(e.ClickedItem as Post);
+            }
         }
     }
 }

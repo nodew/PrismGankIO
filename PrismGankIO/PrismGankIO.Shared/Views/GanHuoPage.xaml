@@ -3,6 +3,9 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:PrismGankIO.Shared.Views"
+    xmlns:models="using:PrismGankIO.Core.Models"
+    xmlns:viewModels="using:PrismGankIO.Shared.ViewModels"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prismMvvm="using:Prism.Mvvm"
@@ -10,7 +13,29 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock>This is the gan huo page</TextBlock>
-    </StackPanel>
+    <Grid>
+        <Pivot 
+            ItemsSource="{Binding TypedPosts}" 
+            SelectionChanged="HandlePivotSelectionChanged"
+            SelectedItem="{Binding SelectedItem}"
+        >
+            <Pivot.HeaderTemplate>
+                <DataTemplate x:DataType="viewModels:TypedPosts">
+                    <TextBlock Text="{Binding Title}" />
+                </DataTemplate>
+            </Pivot.HeaderTemplate>
+            <Pivot.ItemTemplate>
+                <DataTemplate x:DataType="viewModels:TypedPosts">
+                    <ListView
+                        x:Name="PostGridView"
+                        ItemsSource="{Binding Posts, Mode=OneWay}"
+                        ItemTemplate="{StaticResource PostItemTemplate}"
+                        IsItemClickEnabled="True"
+                        SelectionMode="None"
+                        ItemClick="HandlePostItemClick"
+                    ></ListView>
+                </DataTemplate>
+            </Pivot.ItemTemplate>
+        </Pivot>
+    </Grid>
 </Page>

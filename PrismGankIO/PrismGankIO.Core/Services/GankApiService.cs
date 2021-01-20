@@ -6,6 +6,7 @@ using System.Text;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text.Json;
+using System.Threading;
 
 namespace PrismGankIO.Core.Services
 {
@@ -25,58 +26,58 @@ namespace PrismGankIO.Core.Services
             this.serializerOptions.Converters.Add(new DateTimeConverter());
         }
 
-        public async Task<HttpResult<List<SubType>>> GetAvailableTypesAsync(Category category)
+        public async Task<HttpResult<List<SubType>>> GetAvailableTypesAsync(Category category, CancellationToken cancellationToken = default)
         {
             string requestUri = $"{baseUri}/categories/{category}";
-            return await GetDataAsync<HttpResult<List<SubType>>>(requestUri);
+            return await GetDataAsync<HttpResult<List<SubType>>>(requestUri, cancellationToken);
         }
 
-        public async Task<HttpResult<List<SubType>>> GetAvailableTypesOfArticleAsync()
+        public async Task<HttpResult<List<SubType>>> GetAvailableTypesOfArticleAsync(CancellationToken cancellationToken = default)
         {
-            return await GetAvailableTypesAsync(Category.Article);
+            return await GetAvailableTypesAsync(Category.Article, cancellationToken);
         }
 
-        public async Task<HttpResult<List<SubType>>> GetAvailableTypesOfGanhuoAsync()
+        public async Task<HttpResult<List<SubType>>> GetAvailableTypesOfGanhuoAsync(CancellationToken cancellationToken = default)
         {
-            return await GetAvailableTypesAsync(Category.GanHuo);
+            return await GetAvailableTypesAsync(Category.GanHuo, cancellationToken);
         }
 
-        public async Task<HttpResult<List<Banner>>> GetBannersAsync()
+        public async Task<HttpResult<List<Banner>>> GetBannersAsync(CancellationToken cancellationToken = default)
         {
             string requestUri = $"{baseUri}/banners";
-            return await GetDataAsync<HttpResult<List<Banner>>>(requestUri);
+            return await GetDataAsync<HttpResult<List<Banner>>>(requestUri, cancellationToken);
         }
 
-        public async Task<PagedResult<Post>> GetArticlesAsync(string type, int page = 1, int size = 10)
+        public async Task<PagedResult<Post>> GetArticlesAsync(string type, int page = 1, int size = 10, CancellationToken cancellationToken = default)
         {
-            return await GetPostsAsync(Category.Article, type, page, size);
+            return await GetPostsAsync(Category.Article, type, page, size, cancellationToken);
         }
 
-        public async Task<PagedResult<Post>> GetGanHuoAsync(string type, int page = 1, int size = 10)
+        public async Task<PagedResult<Post>> GetGanHuoAsync(string type, int page = 1, int size = 10, CancellationToken cancellationToken = default)
         {
-            return await GetPostsAsync(Category.GanHuo, type, page, size);
+            return await GetPostsAsync(Category.GanHuo, type, page, size, cancellationToken);
         }
 
-        public async Task<PagedResult<Post>> GetGirlsAsync(int page = 1, int size = 10)
+        public async Task<PagedResult<Post>> GetGirlsAsync(int page = 1, int size = 10, CancellationToken cancellationToken = default)
         {
-            return await GetPostsAsync(Category.Girl, "Girl", page, size);
+            return await GetPostsAsync(Category.Girl, "Girl", page, size, cancellationToken);
         }
 
-        public async Task<PagedResult<Post>> GetHotPostsAsync(string hotType, Category category, int count = 10)
+        public async Task<PagedResult<Post>> GetHotPostsAsync(string hotType, Category category, int count = 10, CancellationToken cancellationToken = default)
         {
             string requestUri = $"{baseUri}/hot/{hotType}/category/{category}/count/{count}";
-            return await GetDataAsync<PagedResult<Post>>(requestUri);
+            return await GetDataAsync<PagedResult<Post>>(requestUri, cancellationToken);
         }
 
-        public async Task<PagedResult<Post>> GetPostsAsync(Category category, string type, int page = 1, int size = 10)
+        public async Task<PagedResult<Post>> GetPostsAsync(Category category, string type, int page = 1, int size = 10, CancellationToken cancellationToken = default)
         {
             string requestUri = $"{baseUri}/data/category/{category}/type/{type}/page/{page}/count/{size}";
-            return await GetDataAsync<PagedResult<Post>>(requestUri);
+            return await GetDataAsync<PagedResult<Post>>(requestUri, cancellationToken);
         }
 
-        private async Task<T> GetDataAsync<T>(string uri)
+        private async Task<T> GetDataAsync<T>(string uri, CancellationToken cancellationToken = default)
         {
-            using (var httpResponse = await httpClient.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead))
+            using (var httpResponse = await httpClient.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead, cancellationToken))
             {
                 httpResponse.EnsureSuccessStatusCode();
 
@@ -86,7 +87,7 @@ namespace PrismGankIO.Core.Services
 
                     try
                     {
-                        return await JsonSerializer.DeserializeAsync<T>(contentStream, serializerOptions);
+                        return await JsonSerializer.DeserializeAsync<T>(contentStream, serializerOptions, cancellationToken);
                     }
                     catch (JsonException ex)
                     {

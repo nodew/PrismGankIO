@@ -35,7 +35,7 @@
                         ItemTemplate="{StaticResource PostItemTemplate}"
                         IsItemClickEnabled="True"
                         SelectionMode="None"
-                        IncrementalLoadingTrigger="Edge"
+                        ItemClick="HandlePostItemClick"
                     ></ListView>
                 </DataTemplate>
             </Pivot.ItemTemplate>

@@ -16,31 +16,23 @@
         
     </Page.Resources>
 
-    <ScrollViewer>
-        <Grid Margin="10">
-            <controls:AdaptiveGridView 
-                x:Name="AdaptiveGridViewControl"
-                StretchContentForSingleRow="False"
-                OneRowModeEnabled="False"
-                ItemHeight="300"
-                DesiredWidth="360"
-                SelectionMode="None"
-                IsItemClickEnabled="True"
-                ItemClick="ImageItemClick"
-                ItemsSource="{Binding Posts}"
-                ItemTemplate="{StaticResource GirlItemTemplate}">
-                <controls:AdaptiveGridView.ItemContainerStyle>
-                    <Style TargetType="GridViewItem" >
-                        <Setter Property="Margin" Value="10" />
-                    </Style>
-                </controls:AdaptiveGridView.ItemContainerStyle>
-            </controls:AdaptiveGridView>
-            <controls:Loading x:Name="LoadingControl" IsLoading="{Binding IsLoading}">
-                <controls:Loading.Background>
-                    <SolidColorBrush Color="Black" Opacity="0.25" />
-                </controls:Loading.Background>
-                <ContentControl ContentTemplate="{StaticResource DataLoadingTemplate}" />
-            </controls:Loading>
-        </Grid>
-    </ScrollViewer>
+    <Grid>
+        <controls:AdaptiveGridView 
+            x:Name="AdaptiveGridViewControl"
+            StretchContentForSingleRow="False"
+            OneRowModeEnabled="False"
+            ItemHeight="300"
+            DesiredWidth="360"
+            SelectionMode="None"
+            IsItemClickEnabled="True"
+            ItemClickCommand="{Binding HandleImageItemClickCmd}"
+            ItemsSource="{Binding Posts}"
+            ItemTemplate="{StaticResource GirlItemTemplate}">
+            <controls:AdaptiveGridView.ItemContainerStyle>
+                <Style TargetType="GridViewItem" >
+                    <Setter Property="Margin" Value="10" />
+                </Style>
+            </controls:AdaptiveGridView.ItemContainerStyle>
+        </controls:AdaptiveGridView>
+    </Grid>
 </Page>

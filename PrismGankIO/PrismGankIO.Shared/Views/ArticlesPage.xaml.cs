@@ -1,4 +1,7 @@
-﻿using PrismGankIO.Shared.ViewModels;
+﻿using Prism.Regions;
+using PrismGankIO.Core.Models;
+using PrismGankIO.Shared.Constant;
+using PrismGankIO.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,6 +22,7 @@ namespace PrismGankIO.Shared.Views
     public sealed partial class ArticlesPage : Page
     {
         private ArticlesPageViewModel viewModel;
+
         public ArticlesPage()
         {
             this.InitializeComponent();
@@ -30,6 +34,14 @@ namespace PrismGankIO.Shared.Views
             Pivot pivot = (Pivot)sender;
             TypedPosts selectedItem = (TypedPosts)pivot.SelectedItem;
             viewModel.HandleSelectedTypeChangedCmd.Execute(selectedItem);
+        }
+
+        private void HandlePostItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (e.ClickedItem != null)
+            {
+                viewModel.HandlePostItemClickedCmd.Execute(e.ClickedItem as Post);
+            }
         }
     }
 }

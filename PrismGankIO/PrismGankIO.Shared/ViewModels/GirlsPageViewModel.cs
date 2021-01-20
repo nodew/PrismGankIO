@@ -1,6 +1,10 @@
-﻿using Prism.Mvvm;
+﻿using Microsoft.Toolkit.Uwp;
+using Prism.Commands;
+using Prism.Mvvm;
+using Prism.Regions;
 using PrismGankIO.Core.Models;
 using PrismGankIO.Core.Services;
+using PrismGankIO.Shared.Constant;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,72 +15,30 @@ namespace PrismGankIO.Shared.ViewModels
 {
     public class GirlsPageViewModel : BindableBase
     {
-        private readonly IGankApiService gankApiService;
+        private IncrementalLoadingCollection<PostCollectionSource, Post> posts;
+        private readonly IRegionManager regionManager;
 
-        private ObservableCollection<Post> posts = new ObservableCollection<Post>();
-
-        private int currentPage;
-
-        private readonly int pageSize = 20;
-
-        private bool moreAvailable;
-
-        private bool isLoading;
-
-        public GirlsPageViewModel(IGankApiService gankApiService)
+        public GirlsPageViewModel(IGankApiService gankApiService, IRegionManager regionManager)
         {
-            this.gankApiService = gankApiService;
-            this.currentPage = 1;
-            this.moreAvailable = true;
-            _ = LoadData();
+            this.regionManager = regionManager;
+            PostCollectionSource source = new PostCollectionSource(gankApiService, Category.Girl, "Girl");
+            this.posts = new IncrementalLoadingCollection<PostCollectionSource, Post>(source, 20);
+
+            HandleImageItemClickCmd = new DelegateCommand<Post>(HandleImageItemClick, (item) => !String.IsNullOrEmpty(item.Url));
         }
 
-        public ObservableCollection<Post> Posts
+        public IncrementalLoadingCollection<PostCollectionSource, Post> Posts
         {
             get { return posts; }
-            set { SetProperty(ref posts, value); }
         }
 
-        public bool MoreAvailable
+        public DelegateCommand<Post> HandleImageItemClickCmd { get; }
+
+        private void HandleImageItemClick(Post item)
         {
-            get { return moreAvailable; }
-            set { SetProperty(ref moreAvailable, value); }
-        }
-
-        public bool IsLoading
-        {
-            get { return isLoading; }
-            set { SetProperty(ref isLoading, value); }
-        }
-
-        private async Task LoadNextPage()
-        {
-            currentPage += 1;
-            await LoadData();
-        }
-
-        private async Task LoadData()
-        {
-            if (!MoreAvailable)
-            {
-                return;
-            }
-
-            IsLoading = true;
-
-            PagedResult<Post> result = await gankApiService.GetGirlsAsync(currentPage, pageSize);
-
-            IsLoading = false;
-
-            if (result.PageCount <= currentPage)
-            {
-                MoreAvailable = false;
-            }
-
-            result.Data.ForEach(item =>
-            {
-                Posts.Add(item);
-            });
+            NavigationParameters parameters = new NavigationParameters();
+            parameters.Add("ImageUrl", item.Url);
+            regionManager.RequestNavigate(RegionNames.ContentRegion, Pages.ImageDetailPage, parameters);
         }
     }
 }
