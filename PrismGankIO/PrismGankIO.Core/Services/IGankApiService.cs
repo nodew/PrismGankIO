@@ -11,7 +11,7 @@ namespace PrismGankIO.Core.Services
     {
         Task<PagedResult<Post>> GetPostsAsync(Category category, string type, int page = 1, int size = 10, CancellationToken cancellationToken = default);
 
-        Task<PagedResult<Post>> GetHotPostsAsync(string hotType, Category category, int count = 10, CancellationToken cancellationToken = default);
+        Task<HttpResult<List<Post>>> GetHotPostsAsync(HotType hotType, Category category, int count = 10, CancellationToken cancellationToken = default);
 
         Task<PagedResult<Post>> GetArticlesAsync(string type, int page = 1, int size = 10, CancellationToken cancellationToken = default);
 

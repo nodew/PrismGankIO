@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PrismGankIO.Core.Models;
+using PrismGankIO.Shared.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +27,14 @@ namespace PrismGankIO.Shared.Views
         public HomePage()
         {
             this.InitializeComponent();
+        }
+
+        private void HandlePostItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (e.ClickedItem != null)
+            {
+                (DataContext as HomePageViewModel).HandlePostItemClickedCmd.Execute(e.ClickedItem as Post);
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ using Windows.UI.Xaml;
 using System.Net.Http;
 using PrismGankIO.Core.Services;
 using PrismGankIO.Shared.Constant;
+using System;
 
 namespace PrismGankIO
 {
@@ -43,7 +44,10 @@ namespace PrismGankIO
             containerRegistry.RegisterForNavigation(typeof(ImageDetailPage), Pages.ImageDetailPage);
             containerRegistry.RegisterForNavigation(typeof(PostDetailPage), Pages.PostDetailPage);
 
-            containerRegistry.RegisterInstance(typeof(HttpClient), new HttpClient());
+            HttpClient httpClient = new HttpClient();
+            httpClient.Timeout = TimeSpan.FromSeconds(60);
+
+            containerRegistry.RegisterInstance(typeof(HttpClient), httpClient);
             containerRegistry.RegisterSingleton(typeof(IGankApiService), typeof(GankApiService));
         }
 

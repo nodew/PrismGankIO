@@ -74,5 +74,14 @@ namespace PrismGankIO.Core.Test
             Assert.IsNotNull(posts.Data);
             Assert.IsTrue(posts.Data.Count > 0);
         }
+
+        [TestMethod]
+        public async Task GetHotPostsAsync_Test()
+        {
+            HttpResult<List<Post>> httpResult = await gankApiService.GetHotPostsAsync(HotType.Views, Category.GanHuo);
+            Assert.IsNotNull(httpResult);
+            Assert.IsNotNull(httpResult.Data);
+            Assert.IsTrue(httpResult.Data.Count > 0);
+        }
     }
 }

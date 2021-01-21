@@ -9,7 +9,14 @@
     prismMvvm:ViewModelLocator.AutowireViewModel="True"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <StackPanel>
-        <TextBlock>This is the home page</TextBlock>
-    </StackPanel>
+    <Grid>
+        <ListView
+            x:Name="PostGridView"
+            ItemsSource="{Binding Posts, Mode=OneWay}"
+            ItemTemplate="{StaticResource PostItemTemplate}"
+            IsItemClickEnabled="True"
+            SelectionMode="None"
+            ItemClick="HandlePostItemClick"
+        ></ListView>
+    </Grid>
 </Page>

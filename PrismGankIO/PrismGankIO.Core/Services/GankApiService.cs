@@ -63,10 +63,10 @@ namespace PrismGankIO.Core.Services
             return await GetPostsAsync(Category.Girl, "Girl", page, size, cancellationToken);
         }
 
-        public async Task<PagedResult<Post>> GetHotPostsAsync(string hotType, Category category, int count = 10, CancellationToken cancellationToken = default)
+        public async Task<HttpResult<List<Post>>> GetHotPostsAsync(HotType hotType, Category category, int count = 10, CancellationToken cancellationToken = default)
         {
-            string requestUri = $"{baseUri}/hot/{hotType}/category/{category}/count/{count}";
-            return await GetDataAsync<PagedResult<Post>>(requestUri, cancellationToken);
+            string requestUri = $"{baseUri}/hot/{hotType.ToString().ToLower()}/category/{category}/count/{count}";
+            return await GetDataAsync<HttpResult<List<Post>>>(requestUri, cancellationToken);
         }
 
         public async Task<PagedResult<Post>> GetPostsAsync(Category category, string type, int page = 1, int size = 10, CancellationToken cancellationToken = default)
@@ -77,7 +77,15 @@ namespace PrismGankIO.Core.Services
 
         private async Task<T> GetDataAsync<T>(string uri, CancellationToken cancellationToken = default)
         {
-            using (var httpResponse = await httpClient.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead, cancellationToken))
+            using (
+                var httpResponse = 
+                    await Utils.RetryAsync(
+                        () => httpClient.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead, cancellationToken),
+                        (e) => { 
+                            Console.WriteLine(e); 
+                        }
+                    )
+            )
             {
                 httpResponse.EnsureSuccessStatusCode();
 
