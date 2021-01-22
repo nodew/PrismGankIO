@@ -54,8 +54,16 @@ namespace PrismGankIO.Shared.Views
         {
             if (navigationContext.Parameters.TryGetValue("PostUrl", out string url))
             {
-                PostDetailWebView.Source = new Uri(url);
+                if (url.StartsWith("http"))
+                {
+                    PostDetailWebView.Source = new Uri(url);
+                }
             }
+        }
+
+        private void OpenInBrowser(object sender, RoutedEventArgs e)
+        {
+            _ = Windows.System.Launcher.LaunchUriAsync(PostDetailWebView.Source);
         }
     }
 }

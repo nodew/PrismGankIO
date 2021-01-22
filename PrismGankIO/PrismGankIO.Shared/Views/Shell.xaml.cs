@@ -42,9 +42,9 @@ namespace PrismGankIO.Shared.Views
             };
 
             RegionManager.SetRegionName(MainContent, RegionNames.ContentRegion);
-            regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof(HomePage));
             MainContent.Loaded += (object sender, RoutedEventArgs e) =>
             {
+                regionManager.RequestNavigate(RegionNames.ContentRegion, Pages.HomePage);
                 viewModel.ContentRegionLoadCmd.Execute();
             };
         }
