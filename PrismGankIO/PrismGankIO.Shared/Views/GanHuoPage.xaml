@@ -26,14 +26,27 @@
             </Pivot.HeaderTemplate>
             <Pivot.ItemTemplate>
                 <DataTemplate x:DataType="viewModels:TypedPosts">
-                    <ListView
-                        x:Name="PostGridView"
-                        ItemsSource="{Binding Posts, Mode=OneWay}"
-                        ItemTemplate="{StaticResource PostItemTemplate}"
-                        IsItemClickEnabled="True"
-                        SelectionMode="None"
-                        ItemClick="HandlePostItemClick"
-                    ></ListView>
+                    <Grid>
+                        <ListView
+                            x:Name="PostGridView"
+                            ItemsSource="{Binding Posts, Mode=OneWay}"
+                            ItemTemplate="{StaticResource PostItemTemplate}"
+                            IsItemClickEnabled="True"
+                            SelectionMode="None"
+                            ItemClick="HandlePostItemClick"
+                            IncrementalLoadingTrigger="Edge"
+                            IncrementalLoadingThreshold="0"
+                        ></ListView>
+                        <controls:Loading
+                            x:Name="LoadingControl"
+                            IsLoading="{Binding Posts.IsLoading}"
+                        >
+                            <controls:Loading.Background>
+                                <SolidColorBrush Color="Black" Opacity="0.1" />
+                            </controls:Loading.Background>
+                            <ContentControl Height="120" ContentTemplate="{StaticResource DataLoadingTemplate}"></ContentControl>
+                        </controls:Loading>
+                    </Grid>
                 </DataTemplate>
             </Pivot.ItemTemplate>
         </Pivot>

@@ -13,11 +13,10 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
-        
-    </Page.Resources>
 
+    </Page.Resources>
     <Grid>
-        <controls:AdaptiveGridView 
+        <controls:AdaptiveGridView
             x:Name="AdaptiveGridViewControl"
             StretchContentForSingleRow="False"
             OneRowModeEnabled="False"
@@ -25,6 +24,8 @@
             DesiredWidth="360"
             SelectionMode="None"
             IsItemClickEnabled="True"
+            IncrementalLoadingTrigger="Edge"
+            IncrementalLoadingThreshold="0"
             ItemClickCommand="{Binding HandleImageItemClickCmd}"
             ItemsSource="{Binding Posts}"
             ItemTemplate="{StaticResource GirlItemTemplate}">
@@ -34,5 +35,14 @@
                 </Style>
             </controls:AdaptiveGridView.ItemContainerStyle>
         </controls:AdaptiveGridView>
+        <controls:Loading 
+            x:Name="LoadingControl"
+            IsLoading="{Binding Posts.IsLoading}"
+        >
+            <controls:Loading.Background>
+                <SolidColorBrush Color="Black" Opacity="0.1" />
+            </controls:Loading.Background>
+            <ContentControl ContentTemplate="{StaticResource DataLoadingTemplate}"></ContentControl>
+        </controls:Loading>
     </Grid>
 </Page>

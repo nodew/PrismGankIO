@@ -20,6 +20,8 @@ namespace PrismGankIO.Shared.ViewModels
 
         private ObservableCollection<Post> posts = new ObservableCollection<Post>();
 
+        private bool isLoading;
+
         public HomePageViewModel(IGankApiService gankApiService, IRegionManager regionManager)
         {
             this.gankApiService = gankApiService;
@@ -38,15 +40,23 @@ namespace PrismGankIO.Shared.ViewModels
             set { SetProperty(ref posts, value); }
         }
 
+        public bool IsLoading
+        {
+            get { return isLoading; }
+            set { SetProperty(ref isLoading, value); }
+        }
+
         public DelegateCommand<Post> HandlePostItemClickedCmd { get; }
 
         private async Task LoadDataAsync()
         {
+            IsLoading = true;
             HttpResult<List<Post>> httpResult = await gankApiService.GetHotPostsAsync(HotType.Views, Category.GanHuo);
             httpResult.Data.ForEach(item =>
             {
-                posts.Add(item);
+                Posts.Add(item);
             });
+            IsLoading = false;
         }
 
         private void HandlePostItemClicked(Post item)
