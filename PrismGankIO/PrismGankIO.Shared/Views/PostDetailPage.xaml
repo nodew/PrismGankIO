@@ -16,7 +16,7 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0">
                 <CommandBar Background="Transparent" IsOpen="False" DefaultLabelPosition="Right">
-                    <AppBarButton Icon="Share" x:Uid="OpenInBrowserBtn" Click="OpenInBrowser" />
+                    <AppBarButton x:Uid="OpenInBrowserBtn" Label="Open in browser" Click="OpenInBrowser" />
                 </CommandBar>
             </StackPanel>
             <WebView

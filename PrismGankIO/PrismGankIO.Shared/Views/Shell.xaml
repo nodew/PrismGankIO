@@ -15,22 +15,22 @@
         BackRequested="HandleBackRequested"
     >
         <NavigationView.MenuItems>
-            <NavigationViewItem x:Uid="NavItemRecommands" Tag="HomePage">
+            <NavigationViewItem x:Uid="NavItemRecommands" Content="Recommands" Tag="HomePage">
                 <NavigationViewItem.Icon>
                     <BitmapIcon UriSource="ms-appx:///Assets/home.png" />
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
-            <NavigationViewItem x:Uid="NavItemGirls" Tag="GirlsPage" >
+            <NavigationViewItem x:Uid="NavItemGirls" Content="Girls" Tag="GirlsPage" >
                 <NavigationViewItem.Icon>
                     <BitmapIcon UriSource="ms-appx:///Assets/gift.png" />
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
-            <NavigationViewItem x:Uid="NavItemGanhuo" Tag="GanhuoPage" >
+            <NavigationViewItem x:Uid="NavItemGanhuo" Content="Dry goods" Tag="GanhuoPage" >
                 <NavigationViewItem.Icon>
                     <BitmapIcon UriSource="ms-appx:///Assets/glasses.png" />
                 </NavigationViewItem.Icon>
             </NavigationViewItem>
-            <NavigationViewItem x:Uid="NavItemArticles" Tag="ArticlesPage">
+            <NavigationViewItem x:Uid="NavItemArticles" Content="Articles" Tag="ArticlesPage">
                 <NavigationViewItem.Icon>
                     <BitmapIcon UriSource="ms-appx:///Assets/file-text.png" />
                 </NavigationViewItem.Icon>
